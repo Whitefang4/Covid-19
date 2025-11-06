@@ -29,6 +29,87 @@ Allows comparison between model-learned inflection points and real lockdown timi
 The project uses Italy’s COVID-19 data (Infected, Recovered, Dead) from the Johns Hopkins dataset.
 
 
+🧠 How It Works
+✅ 1. Construct the QSIR Model
+
+A neural network is injected into the dI/dt equation to represent quarantine influence.
+The updated model:
+
+𝑑
+𝐼
+𝑑
+𝑡
+=
+𝛽
+𝑆
+𝐼
+𝑁
+−
+𝛾
+𝐼
+−
+𝑄
+(
+𝑡
+)
+𝐼
+𝑁
+dt
+dI
+	​
+
+=β
+N
+SI
+	​
+
+−γI−Q(t)
+N
+I
+	​
+
+
+Where the neural network approximates 
+𝑄
+(
+𝑡
+)
+Q(t).
+
+✅ 2. Train the UDE
+
+We train using:
+
+InterpolatingAdjoint for efficient gradients
+
+ADAM for initial learning
+
+BFGS for refinement
+
+Log-scale loss function for stability and robustness
+
+✅ 3. Predict & Interpret
+
+After training:
+
+The model predicts infection and recovery curves
+
+The learned quarantine strength 
+𝑄
+(
+𝑡
+)
+Q(t) is extracted
+
+𝑄
+(
+𝑡
+)
+Q(t)’s inflection point matches Italy’s actual lockdown date
+
+The model becomes a diagnostic tool, not just a predictive one.
+
+
 ## How to Run (Quick)
 
 - Install the latest version of Julia (1.10+ recommended).
